@@ -10,8 +10,6 @@ import com.phph.network.base.INetworkRequiredInfo;
 public class FFF implements INetworkRequiredInfo {
     Application application;
 
-
-
     public FFF(Application application) {
         this.application = application;
     }
