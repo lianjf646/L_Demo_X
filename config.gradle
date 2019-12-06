@@ -1,0 +1,10 @@
+ext {
+     //添加代码apply from:"config.gradle"这样你的config.gradle才能使用
+    android = [
+            compileSdkVersion: 28,
+            minSdkVersion    : 21,
+            targetSdkVersion : 28,
+            versionCode      : 1,
+            versionName      : "1.0",
+    ]
+}

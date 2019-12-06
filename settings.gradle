@@ -1,0 +1,2 @@
+include ':app', ':network', ':x_support_lib'
+rootProject.name='L_Demo_X'
