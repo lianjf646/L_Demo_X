@@ -17,11 +17,15 @@ public interface BaseDao<T> {
     void insertItem(T item);//插入单条数据
 
     @Insert
-    void insertItems(List<T> items);//插入list数据
+    void insertItems(T... t);//插入list数据
 
     @Delete
     void deleteItem(T item);//删除item
 
+    @Delete
+    void deleteListItem(List<T> itemList);//删除item
+
     @Update
     void updateItem(T item);//更新item
+
 }

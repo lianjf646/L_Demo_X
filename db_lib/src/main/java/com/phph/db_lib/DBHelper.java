@@ -39,5 +39,6 @@ public abstract class DBHelper extends RoomDatabase {
         mDbName = dbName;
     }
 
+
     public abstract UserDao userDao();
 }

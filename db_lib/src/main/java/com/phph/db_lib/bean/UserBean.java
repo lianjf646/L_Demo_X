@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Entity
 public class UserBean implements Serializable {
 
-    @PrimaryKey //定义主键
+    @PrimaryKey(autoGenerate = true) //定义主键
     public int userId;
 
     @ColumnInfo()
