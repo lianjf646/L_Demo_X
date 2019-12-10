@@ -2,6 +2,7 @@ package com.phph.l_demo_x.activity;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +26,7 @@ public class DBActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_db);
         tv = findViewById(R.id.tv);
-        UserDao userDao = DBHelper.getInstance().userDao();
+        final UserDao userDao = DBHelper.getInstance().userDao();
         UserBean userBean = new UserBean();
         userBean.name = "mm123";
         userBean.phone = "4567897891111111";
@@ -34,14 +35,7 @@ public class DBActivity extends AppCompatActivity {
         UserBean userBean1 = userDao.selectVo("mm123");
         tv.setText(userBean1.phone);
 
-//        List<UserBean> userBeanList = userDao.selectList("mm123");
-////        userDao.deletes("mm123");
-//        userDao.deleteListItem(userBeanList);
-
-//        userBeanList = userDao.selectList("mm123");
-//        userDao.insertItems(userBean, userBean);
-//
-        List<UserBean> userBeanList = userDao.selectList("mm123");
-//        Toast.makeText(this, userBeanList.size(), Toast.LENGTH_SHORT).show();
+        List<UserBean> userBeanList = userDao.getAll();
+        Toast.makeText(this, "" + userBeanList.size(), Toast.LENGTH_SHORT).show();
     }
 }

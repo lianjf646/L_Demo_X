@@ -1,2 +1,2 @@
-include ':app', ':network', ':x_support_lib', ':db_lib'
+include ':app', ':network', ':x_support_lib', ':db_lib', ':diarydemo'
 rootProject.name='L_Demo_X'

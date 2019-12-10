@@ -19,5 +19,7 @@ public interface UserDao extends BaseDao<UserBean> {
     @Query("SELECT * FROM UserBean WHERE name = :name")
     List<UserBean> selectList(String name);
 
+    @Query("SELECT * FROM  userbean")
+    List<UserBean> getAll();
 
 }
