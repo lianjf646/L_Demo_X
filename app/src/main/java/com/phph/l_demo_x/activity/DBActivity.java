@@ -2,7 +2,6 @@ package com.phph.l_demo_x.activity;
 
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +42,6 @@ public class DBActivity extends AppCompatActivity {
 //        userDao.insertItems(userBean, userBean);
 //
         List<UserBean> userBeanList = userDao.selectList("mm123");
-        Toast.makeText(this, userBeanList.size(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, userBeanList.size(), Toast.LENGTH_SHORT).show();
     }
 }
