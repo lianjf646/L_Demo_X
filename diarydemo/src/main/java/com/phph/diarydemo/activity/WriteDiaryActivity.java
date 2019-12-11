@@ -131,7 +131,7 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
         switch (v.getId()) {
 
             case R.id.iv_1:
-
+                startActivity(new Intent(context, CanvasActivity.class));
                 break;
             case R.id.iv_2:
                 performEdit.undo();

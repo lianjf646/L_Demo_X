@@ -47,4 +47,5 @@ dependencies {
     implementation project(path: ':x_support_lib')
     implementation 'com.github.devlight.shadowlayout:library:1.0.2'
     implementation 'ren.qinc.edit:lib:0.0.5'
+    implementation 'com.yinghe:whiteboardlib:1.1.1'
 }
