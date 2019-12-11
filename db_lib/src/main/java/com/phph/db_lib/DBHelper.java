@@ -24,7 +24,6 @@ public abstract class DBHelper extends RoomDatabase {
     public static Context mContext;
     public static String mDbName;
 
-
     public static class Inner {
         public static DBHelper dbHelper = Room.databaseBuilder(mContext, DBHelper.class, mDbName)//
                 .addMigrations(MyMigrations.getUpdateList())//

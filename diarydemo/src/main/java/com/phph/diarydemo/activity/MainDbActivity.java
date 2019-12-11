@@ -1,5 +1,6 @@
-package com.phph.diarydemo;
+package com.phph.diarydemo.activity;
 
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,7 +8,8 @@ import android.widget.ImageView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.phph.x_support_lib.BaseActivity;
+import com.phph.diarydemo.R;
+import com.phph.x_support_lib.base.BaseActivity;
 
 /**
  * Created by v on 2019/12/10.
@@ -19,6 +21,7 @@ public class MainDbActivity extends BaseActivity {
     private ImageView ivMy;
 
     private RecyclerView recycler;
+    private ImageView ibtn_go_write;
 
     @Override
     protected int getLayoutId() {
@@ -35,6 +38,14 @@ public class MainDbActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+
+        ibtn_go_write = findViewById(R.id.ibtn_go_write);
+        ibtn_go_write.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(activity, WriteDiaryActivity.class));
             }
         });
     }

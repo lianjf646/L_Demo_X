@@ -21,8 +21,10 @@ public class DiaryBean {
     @ColumnInfo()
     public String content;
 
-
+//    @TypeConverters(TagsConverter.class)
     public List<String> iamgeList;
+
+//    @TypeConverters(DateConverter.class)
     public Date createDate;
 
 

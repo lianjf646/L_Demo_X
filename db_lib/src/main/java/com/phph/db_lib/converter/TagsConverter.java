@@ -7,23 +7,31 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by v on 2019/12/10.
  */
 public class TagsConverter {
 
+
+    Gson gson = new Gson();
+
     @TypeConverter
-    public static ArrayList<String> fromString(String value) {
-        Type listType = new TypeToken<ArrayList<String>>() {}.getType();
-        return new Gson().fromJson(value, listType);
+    public List<String> stringToSomeObjectList(String data) {
+        if (data == null) {
+            return Collections.emptyList();
+        }
+
+        Type listType = new TypeToken<List<String>>() {}.getType();
+
+        return gson.fromJson(data, listType);
     }
 
     @TypeConverter
-    public static String fromArrayList(ArrayList<String> list) {
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        return json;
+    public String someObjectListToString(List<String> someObjects) {
+        return gson.toJson(someObjects);
     }
+
 }
