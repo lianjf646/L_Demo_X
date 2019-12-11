@@ -5,16 +5,20 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
+import com.phph.db_lib.DBHelper;
+import com.phph.db_lib.bean.DiaryBean;
 import com.phph.diarydemo.R;
 import com.phph.diarydemo.adapter.WriteDiaryAdapter;
 import com.phph.x_support_lib.base.BaseActivity;
@@ -35,6 +39,7 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
     private TextView tvDate;
     private TextView tvTime;
     private EditText etContent;
+    private EditText etTitle;
 
     private TextView tvWeather;
     private ImageView iv1;
@@ -43,12 +48,18 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
     private ImageView iv4;
     private ImageView iv5;
     private ImageView iv6;
+    private ImageView ivhuaban;
+    private ImageView ivSave;
 
     private RecyclerView recycler;
     private WriteDiaryAdapter adapter;
     private ImagePicker imagePicker;
+    List<String> stringImageList = new ArrayList<>();
     private ArrayList<ImageItem> imageItemArrayList;
     private PerformEdit performEdit;
+    private String huaBanpathLoc = "";
+    private String weather = "";
+
 
     @Override
     protected int getLayoutId() {
@@ -62,6 +73,7 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
         tvTime = (TextView) findViewById(R.id.tv_time);
         etContent = (EditText) findViewById(R.id.et_content);
         recycler = (RecyclerView) findViewById(R.id.recycler);
+        etTitle = findViewById(R.id.et_title);
 
         tvWeather = (TextView) findViewById(R.id.tv_weather);
         iv1 = (ImageView) findViewById(R.id.iv_1);
@@ -70,6 +82,8 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
         iv4 = (ImageView) findViewById(R.id.iv_4);
         iv5 = (ImageView) findViewById(R.id.iv_5);
         iv6 = (ImageView) findViewById(R.id.iv_6);
+        ivhuaban = findViewById(R.id.iv_huaban);
+        ivSave = findViewById(R.id.iv_save);
 
         iv1.setOnClickListener(this);
         iv2.setOnClickListener(this);
@@ -84,6 +98,7 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void initData() {
+
         performEdit = new PerformEdit(etContent);
         adapter = new WriteDiaryAdapter(context, new WriteDiaryAdapter.GoPriceListener() {
             @Override
@@ -117,12 +132,17 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
             imageItemArrayList = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
             if (imageItemArrayList == null) return;
             if (imageItemArrayList.isEmpty()) return;
-
-            List<String> strings = new ArrayList<>();
+            stringImageList.clear();
             for (int i = 0; i < imageItemArrayList.size(); i++) {
-                strings.add(imageItemArrayList.get(i).path);
+                stringImageList.add(imageItemArrayList.get(i).path);
             }
-            adapter.setStringList(strings);
+            adapter.setStringList(stringImageList);
+        }
+
+        if (200 == requestCode && 300 == resultCode) {
+            huaBanpathLoc = data.getStringExtra("fileLocPath");
+
+            Glide.with(context).load(huaBanpathLoc).into(ivhuaban);
         }
     }
 
@@ -131,7 +151,7 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
         switch (v.getId()) {
 
             case R.id.iv_1:
-                startActivity(new Intent(context, CanvasActivity.class));
+                startActivityForResult(new Intent(context, CanvasActivity.class), 200);
                 break;
             case R.id.iv_2:
                 performEdit.undo();
@@ -158,6 +178,19 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
                 etContent.append(str);
             }
 
+            break;
+
+            case R.id.iv_save: {
+                DiaryBean diaryBean = new DiaryBean();
+                diaryBean.title = etTitle.getText().toString();
+                diaryBean.content = etContent.getText().toString();
+                diaryBean.createDate = new Date();
+                diaryBean.iamgeList = stringImageList;
+                diaryBean.huabanPathLoc = huaBanpathLoc;
+                diaryBean.weather = weather;
+                DBHelper.getInstance().diaryDao().insertItem(diaryBean);
+                Toast.makeText(activity, "", Toast.LENGTH_SHORT).show();
+            }
             break;
             case R.id.tv_weather:
                 break;

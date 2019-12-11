@@ -15,16 +15,20 @@ public class DiaryBean {
     @PrimaryKey(autoGenerate = true) //定义主键
     public int userId;
 
-    @ColumnInfo()
-    public String title;
 
     @ColumnInfo()
-    public String content;
+    public String title;// 标题
 
-//    @TypeConverters(TagsConverter.class)
+    @ColumnInfo()
+    public String content;// 内容
+
+    @ColumnInfo()
+    public String weather;// 天气
+
+    public String huabanPathLoc;//画板路径
+
     public List<String> iamgeList;
 
-//    @TypeConverters(DateConverter.class)
     public Date createDate;
 
 
