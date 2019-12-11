@@ -92,6 +92,7 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
         iv5.setOnClickListener(this);
         iv6.setOnClickListener(this);
         tvWeather.setOnClickListener(this);
+        ivSave.setOnClickListener(this);
 
 
     }
