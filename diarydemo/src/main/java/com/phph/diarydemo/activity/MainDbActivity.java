@@ -7,6 +7,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +34,8 @@ public class MainDbActivity extends BaseActivity {
     private ImageView ibtn_go_write;
     private MainAdapter mainAdapter;
 
+    private TextView tv_type;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_maindb;
@@ -58,6 +61,14 @@ public class MainDbActivity extends BaseActivity {
                 startActivity(new Intent(activity, WriteDiaryActivity.class));
             }
         });
+
+        tv_type = findViewById(R.id.tv_type);
+        tv_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(activity, TypeActivity.class));
+            }
+        });
     }
 
     @Override
@@ -73,7 +84,7 @@ public class MainDbActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         List<DiaryBean> diaryBeans = DBHelper.getInstance().diaryDao().getAll();
-        if (diaryBeans!=null){
+        if (diaryBeans != null) {
             mainAdapter.setDiaryBeans(diaryBeans);
         }
 

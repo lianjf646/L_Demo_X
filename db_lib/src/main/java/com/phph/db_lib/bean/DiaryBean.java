@@ -25,6 +25,9 @@ public class DiaryBean {
     @ColumnInfo()
     public String weather;// 天气
 
+    @ColumnInfo()
+    public String typeName;
+
     public String huabanPathLoc;//画板路径
 
     public List<String> iamgeList;
