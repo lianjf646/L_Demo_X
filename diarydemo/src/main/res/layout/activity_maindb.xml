@@ -4,6 +4,7 @@
     android:id="@+id/dl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#B5F0ECEC"
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,7 +19,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="#B5F0ECEC">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
@@ -50,7 +52,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-
+    <!--    android:layout_gravity="start"-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -65,25 +67,106 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
                 android:layout_marginTop="80dp"
-                android:text="账号信息"
-                android:textSize="15sp"
+                android:text="功能导航"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
                 android:text="记录你的日子"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:textStyle="italic" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginTop="@dimen/dp10"
-                android:background="@color/blue" />
+                android:background="#B4B4B4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/tongji"
+                android:drawablePadding="@dimen/dp10"
+                android:padding="@dimen/dp10"
+                android:text="统计"
+                android:textColor="#2C2B2B"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/tuku"
+                android:drawablePadding="@dimen/dp10"
+                android:padding="@dimen/dp10"
+                android:text="图库"
+                android:textColor="#2C2B2B"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/chouti_fenlei"
+                android:drawablePadding="@dimen/dp10"
+                android:padding="@dimen/dp10"
+                android:text="分类"
+                android:textColor="#2C2B2B"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ditu"
+                android:drawablePadding="@dimen/dp10"
+                android:padding="@dimen/dp10"
+                android:text="地图"
+                android:textColor="#2C2B2B"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#B4B4B4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/jizhang"
+                android:drawablePadding="@dimen/dp10"
+                android:padding="@dimen/dp10"
+                android:text="记账"
+                android:textColor="#2C2B2B"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/xuxi"
+                android:drawablePadding="@dimen/dp10"
+                android:padding="@dimen/dp10"
+                android:text="学习"
+                android:textColor="#2C2B2B"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#B4B4B4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/huishou"
+                android:drawablePadding="@dimen/dp10"
+                android:padding="@dimen/dp10"
+                android:text="回收"
+                android:textColor="#2C2B2B"
+                android:textSize="13sp" />
         </LinearLayout>
     </FrameLayout>
-
-
 </androidx.drawerlayout.widget.DrawerLayout>

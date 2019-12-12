@@ -1,7 +1,6 @@
 package com.phph.diarydemo.activity;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -74,10 +73,10 @@ public class MainDbActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         List<DiaryBean> diaryBeans = DBHelper.getInstance().diaryDao().getAll();
-        if (diaryBeans != null) {
-            Log.e("FFFFF", "initData: " + diaryBeans.size());
+        if (diaryBeans!=null){
+            mainAdapter.setDiaryBeans(diaryBeans);
         }
-        mainAdapter.setDiaryBeans(diaryBeans);
+
     }
 
     private void initAnim() {

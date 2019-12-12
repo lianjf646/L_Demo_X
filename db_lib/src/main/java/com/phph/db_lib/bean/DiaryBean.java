@@ -28,8 +28,9 @@ public class DiaryBean {
     public String huabanPathLoc;//画板路径
 
     public List<String> iamgeList;
-
     public Date createDate;
+
+    public String year_mouth_day;
 
 
 }

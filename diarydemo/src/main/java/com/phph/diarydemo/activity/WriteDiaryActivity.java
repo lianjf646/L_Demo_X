@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -22,6 +21,7 @@ import com.phph.db_lib.bean.DiaryBean;
 import com.phph.diarydemo.R;
 import com.phph.diarydemo.adapter.WriteDiaryAdapter;
 import com.phph.x_support_lib.base.BaseActivity;
+import com.phph.x_support_lib.helper.DateHelper;
 import com.phph.x_support_lib.util.GlideLoader4ImagePicker;
 
 import java.text.SimpleDateFormat;
@@ -94,7 +94,6 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
         tvWeather.setOnClickListener(this);
         ivSave.setOnClickListener(this);
 
-
     }
 
     @Override
@@ -124,6 +123,9 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
         imagePicker.setFocusHeight(800);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
         imagePicker.setMultiMode(true);
         imagePicker.setSelectLimit(3);    //选中数量限制
+
+        tvDate.setText(DateHelper.getInstance().getDateStr(new Date(), "MM月dd日"));
+        tvTime.setText(DateHelper.getInstance().getDateStr(new Date(), "HH:mm"));
     }
 
     @Override
@@ -142,7 +144,6 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
 
         if (200 == requestCode && 300 == resultCode) {
             huaBanpathLoc = data.getStringExtra("fileLocPath");
-
             Glide.with(context).load(huaBanpathLoc).into(ivhuaban);
         }
     }
@@ -190,7 +191,7 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
                 diaryBean.huabanPathLoc = huaBanpathLoc;
                 diaryBean.weather = weather;
                 DBHelper.getInstance().diaryDao().insertItem(diaryBean);
-                Toast.makeText(activity, "", Toast.LENGTH_SHORT).show();
+                finish();
             }
             break;
             case R.id.tv_weather:

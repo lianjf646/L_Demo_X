@@ -15,4 +15,6 @@ import java.util.List;
 public interface DiaryDao extends BaseDao<DiaryBean> {
     @Query("SELECT * FROM  diaryBean")
     List<DiaryBean> getAll();
+
+
 }
