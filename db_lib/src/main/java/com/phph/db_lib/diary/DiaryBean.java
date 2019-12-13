@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by v on 2019/12/10.
  */
 @Entity
-public class DiaryBean {
+public class DiaryBean implements Serializable {
     @PrimaryKey(autoGenerate = true) //定义主键
     public int userId;
 

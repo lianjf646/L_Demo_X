@@ -13,12 +13,11 @@ import java.util.List;
 /**
  * Created by v on 2019/12/12.
  */
-public abstract class BaseRecyclerAdapter<T extends Object, RV extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<RV> {
+public abstract class BaseRecyclerAdapter<T extends Object, RV extends BaseRecyclerViewHolder> extends RecyclerView.Adapter<RV> {
 
     public Context context;
     public List<T> tList;
     public OnItemClickListener onItemClickListener;
-
 
     public BaseRecyclerAdapter(Context context) {
         this.context = context;
@@ -49,7 +48,7 @@ public abstract class BaseRecyclerAdapter<T extends Object, RV extends RecyclerV
     @Override
     public void onBindViewHolder(@NonNull RV holder, int position) {
         T t = tList.get(position);
-        onBindChildViewHolder(holder, t, position);
+        holder.showView(t, position);
     }
 
 
@@ -57,11 +56,9 @@ public abstract class BaseRecyclerAdapter<T extends Object, RV extends RecyclerV
         return tList.get(position);
     }
 
-    protected abstract void onBindChildViewHolder(RV childHolder, T bean, int position);
+    protected abstract int getLayout();
 
     protected abstract RV getViewHolder(View view);
-
-    protected abstract int getLayout();
 
     public interface OnItemClickListener {
         void onClick(int pos);

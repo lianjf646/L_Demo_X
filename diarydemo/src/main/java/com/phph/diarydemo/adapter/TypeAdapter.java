@@ -6,24 +6,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.phph.diarydemo.R;
 import com.phph.diarydemo.bean.TypeListBean;
 import com.phph.x_support_lib.base.BaseRecyclerAdapter;
+import com.phph.x_support_lib.base.BaseRecyclerViewHolder;
 
 /**
  * Created by v on 2019/12/12.
  */
 public class TypeAdapter extends BaseRecyclerAdapter<TypeListBean, TypeAdapter.ViewHolder> {
-
     public TypeAdapter(Context context) {
         super(context);
-    }
-
-    @Override
-    protected TypeAdapter.ViewHolder getViewHolder(View view) {
-        return new ViewHolder(view);
     }
 
     @Override
@@ -32,22 +26,12 @@ public class TypeAdapter extends BaseRecyclerAdapter<TypeListBean, TypeAdapter.V
     }
 
     @Override
-    protected void onBindChildViewHolder(ViewHolder childHolder, TypeListBean bean, final int position) {
-        childHolder.tv_title.setText(bean.typeName);
-        childHolder.tv_num11.setText(String.valueOf(bean.total));
-        childHolder.tv_num11.append("篇");
-        childHolder.linear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener == null) return;
-                onItemClickListener.onClick(position);
-            }
-        });
-
-
+    protected TypeAdapter.ViewHolder getViewHolder(View view) {
+        return new ViewHolder(view);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+
+    class ViewHolder extends BaseRecyclerViewHolder<TypeListBean> {
         public TextView tv_title;
         public TextView tv_num11;
         public LinearLayout linear;
@@ -58,5 +42,23 @@ public class TypeAdapter extends BaseRecyclerAdapter<TypeListBean, TypeAdapter.V
             tv_num11 = itemView.findViewById(R.id.tv_num11);
             linear = itemView.findViewById(R.id.linear);
         }
+
+        @Override
+        protected void showView(TypeListBean typeListBean, final int position) {
+            tv_title.setText(typeListBean.typeName);
+            tv_num11.setText(String.valueOf(typeListBean.total));
+            tv_num11.append("篇");
+            linear.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onItemClickListener == null) return;
+                    onItemClickListener.onClick(position);
+
+                }
+            });
+        }
     }
 }
+
+
+

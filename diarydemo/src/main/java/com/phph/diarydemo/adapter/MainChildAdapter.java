@@ -56,9 +56,7 @@ public class MainChildAdapter extends RecyclerView.Adapter<MainChildAdapter.View
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             item_iv = itemView.findViewById(R.id.item_iv);
         }
     }
-
 }

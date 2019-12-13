@@ -8,9 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * Created by v on 2019/12/13.
  */
-public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
+public abstract class BaseRecyclerViewHolder<T extends Object> extends RecyclerView.ViewHolder {
 
     public BaseRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
     }
+
+    protected abstract  void showView(T t, int position);
+
+
 }

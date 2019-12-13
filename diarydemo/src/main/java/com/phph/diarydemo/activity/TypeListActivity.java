@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.phph.db_lib.DBHelper;
+import com.phph.db_lib.diary.DiaryBean;
 import com.phph.diarydemo.R;
 import com.phph.diarydemo.adapter.MainAdapter;
 import com.phph.x_support_lib.base.BaseActivity;
@@ -38,7 +39,8 @@ public class TypeListActivity extends BaseActivity {
         mainAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onClick(int pos) {
-                startActivity(new Intent(context, LooKDiaryDetailActivity.class).putExtra("typeName", typeName));
+                DiaryBean bean = mainAdapter.getItemData(pos);
+                startActivity(new Intent(context, LooKDiaryDetailActivity.class).putExtra("DiaryBean", bean));
             }
         });
         recycler.setLayoutManager(new LinearLayoutManager(this));

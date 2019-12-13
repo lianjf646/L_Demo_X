@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.phph.db_lib.diary.DiaryBean;
 import com.phph.diarydemo.R;
 import com.phph.x_support_lib.base.BaseRecyclerAdapter;
+import com.phph.x_support_lib.base.BaseRecyclerViewHolder;
 import com.phph.x_support_lib.helper.DateHelper;
 
 /**
@@ -25,37 +26,10 @@ public class MainAdapter extends BaseRecyclerAdapter<DiaryBean, MainAdapter.View
         super(context);
     }
 
+
     @Override
-    protected void onBindChildViewHolder(ViewHolder childHolder, DiaryBean bean, final int position) {
-
-        if (TextUtils.isEmpty(bean.title)) {
-            childHolder.tvTitle.setVisibility(View.GONE);
-        } else {
-            childHolder.tvTitle.setVisibility(View.VISIBLE);
-        }
-
-        if (TextUtils.isEmpty(bean.content)) {
-            childHolder.tvContent.setVisibility(View.GONE);
-        } else {
-            childHolder.tvContent.setVisibility(View.VISIBLE);
-        }
-        childHolder.tvTitle.setText(bean.title);
-        childHolder.tvContent.setText(bean.content);
-        childHolder.tvLeftTop.setText(DateHelper.getInstance().getDateStr(bean.createDate, "dd"));
-        childHolder.tvLeftBottom.setText(DateHelper.getInstance().getDateStr(bean.createDate, "MM月"));
-        childHolder.tvLeftBottom.append("/");
-        childHolder.tvLeftBottom.append(DateHelper.getInstance().getWeekOfDate(bean.createDate));
-        childHolder.tvTime.setText(DateHelper.getInstance().getDateStr(bean.createDate, "HH:mm"));
-        MainChildAdapter adapter = new MainChildAdapter(context);
-        adapter.setStringList(bean.iamgeList);
-        childHolder.recycler.setAdapter(adapter);
-        childHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener == null) return;
-                onItemClickListener.onClick(position);
-            }
-        });
+    protected int getLayout() {
+        return R.layout.item_main_adapter;
     }
 
     @Override
@@ -63,13 +37,8 @@ public class MainAdapter extends BaseRecyclerAdapter<DiaryBean, MainAdapter.View
         return new ViewHolder(view);
     }
 
-    @Override
-    protected int getLayout() {
-        return R.layout.item_main_adapter;
-    }
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends BaseRecyclerViewHolder<DiaryBean> {
 
         public TextView tvLeftTop;
         public TextView tvLeftBottom;
@@ -90,6 +59,38 @@ public class MainAdapter extends BaseRecyclerAdapter<DiaryBean, MainAdapter.View
             this.tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             linearLayout = itemView.findViewById(R.id.linear);
             recycler.setLayoutManager(new GridLayoutManager(context, 3));
+        }
+
+        @Override
+        protected  void showView(DiaryBean o, final int pos) {
+            if (TextUtils.isEmpty(o.title)) {
+                tvTitle.setVisibility(View.GONE);
+            } else {
+                tvTitle.setVisibility(View.VISIBLE);
+            }
+
+            if (TextUtils.isEmpty(o.content)) {
+                tvContent.setVisibility(View.GONE);
+            } else {
+                tvContent.setVisibility(View.VISIBLE);
+            }
+            tvTitle.setText(o.title);
+            tvContent.setText(o.content);
+            tvLeftTop.setText(DateHelper.getInstance().getDateStr(o.createDate, "dd"));
+            tvLeftBottom.setText(DateHelper.getInstance().getDateStr(o.createDate, "MM月"));
+            tvLeftBottom.append("/");
+            tvLeftBottom.append(DateHelper.getInstance().getWeekOfDate(o.createDate));
+            tvTime.setText(DateHelper.getInstance().getDateStr(o.createDate, "HH:mm"));
+            MainChildAdapter adapter = new MainChildAdapter(context);
+            adapter.setStringList(o.iamgeList);
+            recycler.setAdapter(adapter);
+            linearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onItemClickListener == null) return;
+                    onItemClickListener.onClick(pos);
+                }
+            });
         }
     }
 }
