@@ -1,4 +1,4 @@
-package com.phph.db_lib.bean;
+package com.phph.db_lib.diary;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

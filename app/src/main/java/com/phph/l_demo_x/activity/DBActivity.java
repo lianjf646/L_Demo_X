@@ -8,8 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.phph.db_lib.DBHelper;
-import com.phph.db_lib.bean.UserBean;
-import com.phph.db_lib.dao.UserDao;
+import com.phph.db_lib.user.UserBean;
+import com.phph.db_lib.user.UserDao;
 import com.phph.l_demo_x.R;
 
 import java.util.List;

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.phph.db_lib.DBHelper;
-import com.phph.db_lib.bean.DiaryBean;
+import com.phph.db_lib.diary.DiaryBean;
 import com.phph.diarydemo.R;
 import com.phph.diarydemo.adapter.MainAdapter;
 import com.phph.x_support_lib.base.BaseActivity;
@@ -31,9 +31,9 @@ public class MainDbActivity extends BaseActivity {
     private ImageView ivMy;
 
     private RecyclerView recycler;
-    private ImageView ibtn_go_write;
     private MainAdapter mainAdapter;
 
+    private ImageView ibtn_go_write;
     private TextView tv_type;
 
     @Override
@@ -85,7 +85,7 @@ public class MainDbActivity extends BaseActivity {
         super.onResume();
         List<DiaryBean> diaryBeans = DBHelper.getInstance().diaryDao().getAll();
         if (diaryBeans != null) {
-            mainAdapter.setDiaryBeans(diaryBeans);
+            mainAdapter.setTList(diaryBeans);
         }
 
     }

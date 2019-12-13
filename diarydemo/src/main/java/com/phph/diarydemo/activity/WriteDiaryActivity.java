@@ -1,12 +1,15 @@
 package com.phph.diarydemo.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +20,8 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.phph.db_lib.DBHelper;
-import com.phph.db_lib.bean.DiaryBean;
+import com.phph.db_lib.diary.DiaryBean;
+import com.phph.db_lib.type.TypeBean;
 import com.phph.diarydemo.R;
 import com.phph.diarydemo.adapter.WriteDiaryAdapter;
 import com.phph.x_support_lib.base.BaseActivity;
@@ -50,6 +54,7 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
     private ImageView iv6;
     private ImageView ivhuaban;
     private ImageView ivSave;
+    private ImageView iv_type_list;
 
     private RecyclerView recycler;
     private WriteDiaryAdapter adapter;
@@ -58,8 +63,9 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
     private ArrayList<ImageItem> imageItemArrayList;
     private PerformEdit performEdit;
     private String huaBanpathLoc = "";
-    private String weather = "";
+    private String weather = "未知";
 
+    private String typeName = "未分类";
 
     @Override
     protected int getLayoutId() {
@@ -84,7 +90,9 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
         iv6 = (ImageView) findViewById(R.id.iv_6);
         ivhuaban = findViewById(R.id.iv_huaban);
         ivSave = findViewById(R.id.iv_save);
+        iv_type_list = findViewById(R.id.iv_type_list);
 
+        iv_type_list.setOnClickListener(this);
         iv1.setOnClickListener(this);
         iv2.setOnClickListener(this);
         iv3.setOnClickListener(this);
@@ -190,13 +198,64 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
                 diaryBean.iamgeList = stringImageList;
                 diaryBean.huabanPathLoc = huaBanpathLoc;
                 diaryBean.weather = weather;
+                diaryBean.typeName = typeName;
                 DBHelper.getInstance().diaryDao().insertItem(diaryBean);
                 finish();
             }
             break;
             case R.id.tv_weather:
-                break;
+                final String[] weatherString = new String[]{"晴", "多云", "阴", "雨", "雪", "晴", "雾", "霾", "未知"};
+                AlertDialog alertDialog = new AlertDialog.Builder(context).setItems(weatherString, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        weather = weatherString[which];
+                        Toast.makeText(activity, "" + weather, Toast.LENGTH_SHORT).show();
+                    }
+                }).setTitle("选择天气").create();
+                alertDialog.show();
 
+                break;
+            case R.id.iv_type_list:
+                showDialogList();
+                break;
         }
+
+    }
+
+    private void showDialogList() {
+        List<TypeBean> typeBeanList = DBHelper.getInstance().typeDao().getAll();
+        final List<String> typeList = new ArrayList<>();
+        for (TypeBean typeBean : typeBeanList) {
+            typeList.add(typeBean.typeName);
+        }
+        String[] strings = typeList.toArray(new String[]{});
+        AlertDialog alertDialog = new AlertDialog.Builder(context).setItems(strings, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                typeName = typeList.get(which);
+            }
+        }).setTitle("分类列表").setPositiveButton("添加分类", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                addTypeListDialog();
+            }
+        }).create();
+        alertDialog.show();
+    }
+
+    private void addTypeListDialog() {
+        final EditText text = new EditText(context);
+        text.setHint("添加分类");
+        text.setBackground(null);
+        new AlertDialog.Builder(context).setTitle("是否添加分类?").setView(text).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String string = text.getText().toString().trim();
+                TypeBean typeBean = new TypeBean();
+                typeBean.typeName = string;
+                DBHelper.getInstance().typeDao().insertItem(typeBean);
+            }
+        }).setNegativeButton("取消", null).show();
+        return;
     }
 }

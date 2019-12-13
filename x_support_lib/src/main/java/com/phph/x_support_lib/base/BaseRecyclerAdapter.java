@@ -17,14 +17,20 @@ public abstract class BaseRecyclerAdapter<T extends Object, RV extends RecyclerV
 
     public Context context;
     public List<T> tList;
+    public OnItemClickListener onItemClickListener;
+
 
     public BaseRecyclerAdapter(Context context) {
         this.context = context;
     }
 
-    public void setObjectList(List<T> tList) {
+    public void setTList(List<T> tList) {
         this.tList = tList;
         notifyDataSetChanged();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -39,10 +45,16 @@ public abstract class BaseRecyclerAdapter<T extends Object, RV extends RecyclerV
         return getViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull RV holder, int position) {
         T t = tList.get(position);
         onBindChildViewHolder(holder, t, position);
+    }
+
+
+    public T getItemData(int position) {
+        return tList.get(position);
     }
 
     protected abstract void onBindChildViewHolder(RV childHolder, T bean, int position);
@@ -50,4 +62,8 @@ public abstract class BaseRecyclerAdapter<T extends Object, RV extends RecyclerV
     protected abstract RV getViewHolder(View view);
 
     protected abstract int getLayout();
+
+    public interface OnItemClickListener {
+        void onClick(int pos);
+    }
 }

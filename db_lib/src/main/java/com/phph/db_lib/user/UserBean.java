@@ -1,17 +1,23 @@
-package com.phph.db_lib.bean;
+package com.phph.db_lib.user;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 /**
- * Created by v on 2019/12/12.
+ * Created by v on 2019/12/9.
  */
 @Entity
-public class TypeBean {
+public class UserBean implements Serializable {
+
     @PrimaryKey(autoGenerate = true) //定义主键
     public int userId;
+
     @ColumnInfo()
-    public String typeName;
+    public String name;
+    @ColumnInfo()
+    public String phone;
 
 }

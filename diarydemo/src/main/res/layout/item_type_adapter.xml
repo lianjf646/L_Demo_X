@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp10"
+    android:background="@drawable/bg_round"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="@dimen/dp10">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="111111" />
+        android:text="标题"
+        android:textColor="#10455E"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tv_num"
+        android:id="@+id/tv_num11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="111111" />
+        android:drawableRight="@drawable/zonghe"
+        android:drawablePadding="@dimen/dp10"
+        android:gravity="center"
+        android:text="10篇" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher" />
+
 </LinearLayout>

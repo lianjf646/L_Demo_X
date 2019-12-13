@@ -7,14 +7,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.phph.db_lib.bean.DiaryBean;
-import com.phph.db_lib.bean.TypeBean;
-import com.phph.db_lib.bean.UserBean;
+import com.phph.db_lib.diary.DiaryBean;
+import com.phph.db_lib.type.TypeBean;
+import com.phph.db_lib.user.UserBean;
 import com.phph.db_lib.converter.DateConverter;
 import com.phph.db_lib.converter.TagsConverter;
-import com.phph.db_lib.dao.DiaryDao;
-import com.phph.db_lib.dao.TypeDao;
-import com.phph.db_lib.dao.UserDao;
+import com.phph.db_lib.diary.DiaryDao;
+import com.phph.db_lib.type.TypeDao;
+import com.phph.db_lib.user.UserDao;
 
 /**
  * Created by v on 2019/12/9.

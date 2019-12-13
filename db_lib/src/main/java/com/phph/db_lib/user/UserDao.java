@@ -1,10 +1,9 @@
-package com.phph.db_lib.dao;
+package com.phph.db_lib.user;
 
 import androidx.room.Dao;
 import androidx.room.Query;
 
 import com.phph.db_lib.base.BaseDao;
-import com.phph.db_lib.bean.UserBean;
 
 import java.util.List;
 
