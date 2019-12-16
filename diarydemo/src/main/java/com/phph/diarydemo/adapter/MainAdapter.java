@@ -21,6 +21,11 @@ import com.phph.x_support_lib.helper.DateHelper;
  */
 public class MainAdapter extends BaseRecyclerAdapter<DiaryBean, MainAdapter.ViewHolder> {
 
+    OnLongClickListener onLongClickListener;
+
+    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
+        this.onLongClickListener = onLongClickListener;
+    }
 
     public MainAdapter(Context context) {
         super(context);
@@ -37,6 +42,9 @@ public class MainAdapter extends BaseRecyclerAdapter<DiaryBean, MainAdapter.View
         return new ViewHolder(view);
     }
 
+    public interface OnLongClickListener {
+        void onLongClick(int pos);
+    }
 
     public class ViewHolder extends BaseRecyclerViewHolder<DiaryBean> {
 
@@ -62,7 +70,7 @@ public class MainAdapter extends BaseRecyclerAdapter<DiaryBean, MainAdapter.View
         }
 
         @Override
-        protected  void showView(DiaryBean o, final int pos) {
+        protected void showView(DiaryBean o, final int pos) {
             if (TextUtils.isEmpty(o.title)) {
                 tvTitle.setVisibility(View.GONE);
             } else {
@@ -89,6 +97,14 @@ public class MainAdapter extends BaseRecyclerAdapter<DiaryBean, MainAdapter.View
                 public void onClick(View v) {
                     if (onItemClickListener == null) return;
                     onItemClickListener.onClick(pos);
+                }
+            });
+
+            linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onLongClickListener.onLongClick(pos);
+                    return true;
                 }
             });
         }

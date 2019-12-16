@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.phph.db_lib.diary.DiaryBean;
 import com.phph.diarydemo.R;
 import com.phph.diarydemo.adapter.MainAdapter;
 import com.phph.x_support_lib.base.BaseActivity;
+import com.phph.x_support_lib.base.BaseRecyclerAdapter;
 
 import java.util.List;
 
@@ -77,13 +79,31 @@ public class MainDbActivity extends BaseActivity {
         mainAdapter = new MainAdapter(this);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setAdapter(mainAdapter);
+        mainAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int pos) {
+                DiaryBean bean = mainAdapter.getItemData(pos);
+                startActivity(new Intent(context, LooKDiaryDetailActivity.class).putExtra("DiaryBean", bean));
+            }
+        });
+        mainAdapter.setOnLongClickListener(new MainAdapter.OnLongClickListener() {
+            @Override
+            public void onLongClick(int pos) {
+                DiaryBean bean = mainAdapter.getItemData(pos);
+                DBHelper.getInstance().diaryDao().deleteItem(bean);
+                diaryBeans.remove(bean);
+
+                mainAdapter.notifyItemRemoved(pos);
+                mainAdapter.notifyItemRangeRemoved(pos,mainAdapter.getItemCount());
+            }
+        });
 
     }
-
+    List<DiaryBean> diaryBeans;
     @Override
     protected void onResume() {
         super.onResume();
-        List<DiaryBean> diaryBeans = DBHelper.getInstance().diaryDao().getAll();
+      diaryBeans = DBHelper.getInstance().diaryDao().getAll();
         if (diaryBeans != null) {
             mainAdapter.setTList(diaryBeans);
         }
@@ -101,5 +121,17 @@ public class MainDbActivity extends BaseActivity {
         lac.setDelay(0.5f);
         //为ListView设置LayoutAnimationController属性；
         recycler.setLayoutAnimation(lac);
+    }
+
+    private long exitTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
     }
 }

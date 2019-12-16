@@ -34,4 +34,5 @@ public interface DiaryDao extends BaseDao<DiaryBean> {
      */
     @Query("SELECT  * FROM diaryBean WHERE typeName = :typeName")
     List<DiaryBean> getTypeNameList(String typeName);
+
 }

@@ -20,12 +20,24 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <ImageView
+            android:id="@+id/iv_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_share_go"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <TextView
             android:id="@+id/tv_share_go"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="去分享"
+            android:layout_marginRight="15dp"
+            android:drawableLeft="@drawable/share"
             android:textColor="@color/write"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -36,20 +48,40 @@
     <ScrollView
         android:id="@+id/NestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/write">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/write"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center_horizontal"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_year_mooth_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:text="年月日"
+                android:textColor="#353434"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/tv_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:text="年月日"
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dp10"
+                android:paddingTop="@dimen/dp10"
                 android:text="标题"
                 android:textColor="#10455E"
                 android:textSize="18sp"
@@ -70,7 +102,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/write"
+                android:focusable="false" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
