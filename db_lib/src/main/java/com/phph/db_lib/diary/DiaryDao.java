@@ -46,9 +46,10 @@ public interface DiaryDao extends BaseDao<DiaryBean> {
     List<DiaryBean> getTypeNameList(String typeName);
 
     /**
-     * 模糊搜 与非模糊搜索 LIKE 后面添加 '%'||
+     * 模糊搜
      * "SELECT * FROM tb_use WHERE Name LIKE '%' || :name" || '%'
-     * 或者传进来的字符串 就完成拼接 "%search%"
+     * 或者传进来的字符串 就完成拼接
+     * "%search%"
      *
      * @param search
      * @return

@@ -1,5 +1,6 @@
 package com.phph.diarydemo.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Gravity;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,8 +22,10 @@ import com.phph.diarydemo.R;
 import com.phph.diarydemo.adapter.MainAdapter;
 import com.phph.x_support_lib.base.BaseActivity;
 import com.phph.x_support_lib.base.BaseRecyclerAdapter;
+import com.phph.x_support_lib.helper.DateHelper;
 import com.phph.x_support_lib.util.ListUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,6 +44,9 @@ public class MainDbActivity extends BaseActivity {
     private TextView tv_type;
     private ImageView iv_search;
     private ImageView iv_not_data;
+    private ImageView iv_set;
+    private TextView tv_date;
+    private TextView tv_time;
 
     @Override
     protected int getLayoutId() {
@@ -83,6 +90,18 @@ public class MainDbActivity extends BaseActivity {
             }
         });
         iv_not_data = findViewById(R.id.iv_not_data);
+
+        iv_set = findViewById(R.id.iv_set);
+        iv_set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "???", Toast.LENGTH_SHORT).show();
+            }
+        });
+        tv_date = findViewById(R.id.tv_date);
+        tv_time = findViewById(R.id.tv_time);
+
+
     }
 
     @Override
@@ -98,19 +117,31 @@ public class MainDbActivity extends BaseActivity {
                 startActivity(new Intent(context, LooKDiaryDetailActivity.class).putExtra("DiaryBean", bean));
             }
         });
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         mainAdapter.setOnLongClickListener(new MainAdapter.OnLongClickListener() {
             @Override
-            public void onLongClick(int pos) {
-                DiaryBean bean = mainAdapter.getItemData(pos);
-                DBHelper.getInstance().diaryDao().deleteItem(bean);
-                diaryBeans.remove(bean);
-                mainAdapter.notifyItemRemoved(pos);
-                mainAdapter.notifyItemRangeRemoved(pos, mainAdapter.getItemCount());
-                if (ListUtils.isEmpty(diaryBeans)) {
-                    iv_not_data.setVisibility(View.VISIBLE);
-                } else {
-                    iv_not_data.setVisibility(View.GONE);
-                }
+            public void onLongClick(final int pos) {
+
+
+                dialog.setTitle("提示:")//
+                        .setMessage("是否放入回收站")//
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DiaryBean bean = mainAdapter.getItemData(pos);
+                                DBHelper.getInstance().diaryDao().deleteItem(bean);
+                                diaryBeans.remove(bean);
+                                mainAdapter.notifyItemRemoved(pos);
+                                mainAdapter.notifyItemRangeRemoved(pos, mainAdapter.getItemCount());
+                                if (ListUtils.isEmpty(diaryBeans)) {
+                                    iv_not_data.setVisibility(View.VISIBLE);
+                                } else {
+                                    iv_not_data.setVisibility(View.GONE);
+                                }
+                            }
+                        })//
+                        .setNeutralButton("取消", null)//
+                        .show();
 
             }
         });
@@ -119,9 +150,14 @@ public class MainDbActivity extends BaseActivity {
 
     List<DiaryBean> diaryBeans;
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
+        Date date = new Date(System.currentTimeMillis());
+        tv_date.setText(DateHelper.getInstance().getDateStr(date,"MM月dd日"));
+        tv_time.setText(DateHelper.getInstance().getDateStr(date,"HH:mm"));
         diaryBeans = DBHelper.getInstance().diaryDao().getAllDesc();
         if (diaryBeans != null) {
             mainAdapter.setTList(diaryBeans);
