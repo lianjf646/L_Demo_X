@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.phph.db_lib.DBHelper;
 import com.phph.db_lib.diary.DiaryBean;
+import com.phph.db_lib.recovery.RecoverBean;
 import com.phph.diarydemo.R;
 import com.phph.diarydemo.adapter.MainAdapter;
 import com.phph.x_support_lib.base.BaseActivity;
@@ -47,6 +48,8 @@ public class MainDbActivity extends BaseActivity {
     private ImageView iv_set;
     private TextView tv_date;
     private TextView tv_time;
+
+    private TextView tv_recover;
 
     @Override
     protected int getLayoutId() {
@@ -78,7 +81,6 @@ public class MainDbActivity extends BaseActivity {
         tv_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.closeDrawer(Gravity.LEFT);
                 startActivity(new Intent(activity, TypeActivity.class));
             }
         });
@@ -109,7 +111,13 @@ public class MainDbActivity extends BaseActivity {
         });
         tv_date = findViewById(R.id.tv_date);
         tv_time = findViewById(R.id.tv_time);
-
+        tv_recover = findViewById(R.id.tv_recover);
+        tv_recover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, RecoverActivity.class));
+            }
+        });
 
     }
 
@@ -139,6 +147,16 @@ public class MainDbActivity extends BaseActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 DiaryBean bean = mainAdapter.getItemData(pos);
                                 DBHelper.getInstance().diaryDao().deleteItem(bean);
+                                RecoverBean recoverBean = new RecoverBean();
+                                recoverBean.title = bean.title;
+                                recoverBean.content = bean.content;
+                                recoverBean.weather = bean.weather;
+                                recoverBean.typeName = bean.typeName;
+                                recoverBean.huabanPathLoc = bean.huabanPathLoc;
+                                recoverBean.iamgeList = bean.iamgeList;
+                                recoverBean.createDate = bean.createDate;
+                                recoverBean.year_mouth_day = bean.year_mouth_day;
+                                DBHelper.getInstance().recoverDao().insertItem(recoverBean);
                                 diaryBeans.remove(bean);
                                 mainAdapter.notifyItemRemoved(pos);
                                 mainAdapter.notifyItemRangeRemoved(pos, mainAdapter.getItemCount());

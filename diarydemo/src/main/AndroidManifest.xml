@@ -58,6 +58,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <activity
+            android:name=".activity.RecoverActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.phph.diarydemo.fileProvider"
@@ -68,5 +73,4 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
-
 </manifest>
