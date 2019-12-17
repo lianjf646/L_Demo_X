@@ -20,6 +20,7 @@ import com.phph.diarydemo.R;
 import com.phph.diarydemo.adapter.MainAdapter;
 import com.phph.x_support_lib.base.BaseActivity;
 import com.phph.x_support_lib.base.BaseRecyclerAdapter;
+import com.phph.x_support_lib.util.ListUtils;
 
 import java.util.List;
 
@@ -37,6 +38,8 @@ public class MainDbActivity extends BaseActivity {
 
     private ImageView ibtn_go_write;
     private TextView tv_type;
+    private ImageView iv_search;
+    private ImageView iv_not_data;
 
     @Override
     protected int getLayoutId() {
@@ -71,6 +74,15 @@ public class MainDbActivity extends BaseActivity {
                 startActivity(new Intent(activity, TypeActivity.class));
             }
         });
+
+        iv_search = findViewById(R.id.iv_search);
+        iv_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, SearchActivity.class));
+            }
+        });
+        iv_not_data = findViewById(R.id.iv_not_data);
     }
 
     @Override
@@ -92,20 +104,32 @@ public class MainDbActivity extends BaseActivity {
                 DiaryBean bean = mainAdapter.getItemData(pos);
                 DBHelper.getInstance().diaryDao().deleteItem(bean);
                 diaryBeans.remove(bean);
-
                 mainAdapter.notifyItemRemoved(pos);
-                mainAdapter.notifyItemRangeRemoved(pos,mainAdapter.getItemCount());
+                mainAdapter.notifyItemRangeRemoved(pos, mainAdapter.getItemCount());
+                if (ListUtils.isEmpty(diaryBeans)) {
+                    iv_not_data.setVisibility(View.VISIBLE);
+                } else {
+                    iv_not_data.setVisibility(View.GONE);
+                }
+
             }
         });
 
     }
+
     List<DiaryBean> diaryBeans;
+
     @Override
     protected void onResume() {
         super.onResume();
-      diaryBeans = DBHelper.getInstance().diaryDao().getAll();
+        diaryBeans = DBHelper.getInstance().diaryDao().getAllDesc();
         if (diaryBeans != null) {
             mainAdapter.setTList(diaryBeans);
+        }
+        if (ListUtils.isEmpty(diaryBeans)) {
+            iv_not_data.setVisibility(View.VISIBLE);
+        } else {
+            iv_not_data.setVisibility(View.GONE);
         }
 
     }

@@ -8,6 +8,8 @@ import androidx.room.Update;
 import java.util.List;
 
 /**
+ * Android ROOM Developers官方文档翻译：
+ * https://kevinwu.cn/p/717ed5d8/#%E4%BD%BF%E7%94%A8Room%E7%9A%84DAOs%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE
  * Created by v on 2019/12/9.
  */
 @Dao

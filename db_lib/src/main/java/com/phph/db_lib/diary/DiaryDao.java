@@ -19,6 +19,16 @@ public interface DiaryDao extends BaseDao<DiaryBean> {
     @Query("SELECT * FROM  diaryBean")
     List<DiaryBean> getAll();
 
+
+    /**
+     * 查找DiaryBean
+     * Desc 降序
+     *
+     * @return
+     */
+    @Query("SELECT * FROM diaryBean ORDER BY createDate DESC")
+    List<DiaryBean> getAllDesc();
+
     /**
      * 获取数据库表中总条数
      *
@@ -34,5 +44,26 @@ public interface DiaryDao extends BaseDao<DiaryBean> {
      */
     @Query("SELECT  * FROM diaryBean WHERE typeName = :typeName")
     List<DiaryBean> getTypeNameList(String typeName);
+
+    /**
+     * 模糊搜 与非模糊搜索 LIKE 后面添加 '%'||
+     * "SELECT * FROM tb_use WHERE Name LIKE '%' || :name" || '%'
+     * 或者传进来的字符串 就完成拼接 "%search%"
+     *
+     * @param search
+     * @return
+     */
+    @Query("SELECT * FROM diaryBean WHERE title LIKE :search OR content LIKE :search")
+    List<DiaryBean> findTitleWithContent(String search);
+
+
+    /**
+     * 模糊搜
+     *
+     * @param search
+     * @return
+     */
+    @Query("SELECT * FROM diaryBean WHERE title LIKE '%' ||:search || '%'")
+    List<DiaryBean> findTitle(String search);
 
 }
