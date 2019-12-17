@@ -66,6 +66,8 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
     private String weather = "未知";
 
     private String typeName = "未分类";
+    private DiaryBean bean;
+    private int id;
 
     @Override
     protected int getLayoutId() {
@@ -101,7 +103,12 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
         iv6.setOnClickListener(this);
         tvWeather.setOnClickListener(this);
         ivSave.setOnClickListener(this);
-
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -134,6 +141,18 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
 
         tvDate.setText(DateHelper.getInstance().getDateStr(new Date(), "MM月dd日"));
         tvTime.setText(DateHelper.getInstance().getDateStr(new Date(), "HH:mm"));
+        id = getIntent().getIntExtra("id", -1);
+        if (id != -1) {
+            bean = DBHelper.getInstance().diaryDao().findId(id);
+            etTitle.setText(bean.title);
+            etContent.setText(bean.content);
+            adapter.setStringList(bean.iamgeList);
+            Glide.with(context).load(bean.huabanPathLoc).into(ivhuaban);
+            weather = bean.weather;
+            typeName = bean.typeName;
+            stringImageList = bean.iamgeList;
+            huaBanpathLoc = bean.huabanPathLoc;
+        }
     }
 
     @Override
@@ -191,6 +210,19 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
             break;
 
             case R.id.iv_save: {
+                if (bean != null) {
+                    bean.title = etTitle.getText().toString();
+                    bean.content = etContent.getText().toString();
+                    bean.createDate = new Date();
+                    bean.iamgeList = stringImageList;
+                    bean.huabanPathLoc = huaBanpathLoc;
+                    bean.weather = weather;
+                    bean.typeName = typeName;
+
+                    DBHelper.getInstance().diaryDao().updateItem(bean);
+                    finish();
+                    return;
+                }
                 DiaryBean diaryBean = new DiaryBean();
                 diaryBean.title = etTitle.getText().toString();
                 diaryBean.content = etContent.getText().toString();

@@ -31,6 +31,8 @@ public class SearchActivity extends BaseActivity {
     private ImageView iv_not_data;
     private ImageView iv_search;
 
+    private ImageView iv_back;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_search;
@@ -80,6 +82,14 @@ public class SearchActivity extends BaseActivity {
 //                    iv_not_data.setVisibility(View.GONE);
 //                }
 
+            }
+        });
+
+        iv_back = findViewById(R.id.iv_back);
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

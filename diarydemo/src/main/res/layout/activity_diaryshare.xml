@@ -99,7 +99,7 @@
                 android:textColor="#00080C"
                 android:textSize="15sp" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.phph.x_support_lib.view.SSRecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

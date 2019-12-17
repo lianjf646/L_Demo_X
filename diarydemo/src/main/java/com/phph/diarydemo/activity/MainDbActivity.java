@@ -78,6 +78,7 @@ public class MainDbActivity extends BaseActivity {
         tv_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                drawerLayout.closeDrawer(Gravity.LEFT);
                 startActivity(new Intent(activity, TypeActivity.class));
             }
         });
@@ -95,7 +96,15 @@ public class MainDbActivity extends BaseActivity {
         iv_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "???", Toast.LENGTH_SHORT).show();
+                final String[] weatherString = new String[]{"按时间顺序", "按时间逆序", "打码日记内容", "显示日记内容"};
+                AlertDialog alertDialog = new AlertDialog.Builder(context).setItems(weatherString, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                        weather = weatherString[which];
+//                        Toast.makeText(activity, "" + weather, Toast.LENGTH_SHORT).show();
+                    }
+                }).setTitle("设置").create();
+                alertDialog.show();
             }
         });
         tv_date = findViewById(R.id.tv_date);
@@ -114,7 +123,7 @@ public class MainDbActivity extends BaseActivity {
             @Override
             public void onClick(int pos) {
                 DiaryBean bean = mainAdapter.getItemData(pos);
-                startActivity(new Intent(context, LooKDiaryDetailActivity.class).putExtra("DiaryBean", bean));
+                startActivity(new Intent(context, LooKDiaryDetailActivity.class).putExtra("id", bean.userId));
             }
         });
         final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
@@ -151,13 +160,12 @@ public class MainDbActivity extends BaseActivity {
     List<DiaryBean> diaryBeans;
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
         Date date = new Date(System.currentTimeMillis());
-        tv_date.setText(DateHelper.getInstance().getDateStr(date,"MM月dd日"));
-        tv_time.setText(DateHelper.getInstance().getDateStr(date,"HH:mm"));
+        tv_date.setText(DateHelper.getInstance().getDateStr(date, "MM月dd日"));
+        tv_time.setText(DateHelper.getInstance().getDateStr(date, "HH:mm"));
         diaryBeans = DBHelper.getInstance().diaryDao().getAllDesc();
         if (diaryBeans != null) {
             mainAdapter.setTList(diaryBeans);

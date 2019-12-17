@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -13,14 +14,15 @@ import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.phph.db_lib.DBHelper;
 import com.phph.db_lib.diary.DiaryBean;
 import com.phph.diarydemo.BuildConfig;
 import com.phph.diarydemo.R;
 import com.phph.diarydemo.adapter.ShareListAdapter;
 import com.phph.x_support_lib.base.BaseActivity;
 import com.phph.x_support_lib.helper.DateHelper;
+import com.phph.x_support_lib.view.SSRecyclerView;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -36,7 +38,7 @@ public class DiaryShareActivity extends BaseActivity {
     private DiaryBean bean;
     private TextView tv_title;
     private TextView tv_content;
-    private RecyclerView recycler;
+    private SSRecyclerView recycler;
 
     private ShareListAdapter adapter;
     private ScrollView NestedScrollView;
@@ -120,10 +122,13 @@ public class DiaryShareActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        bean = (DiaryBean) getIntent().getSerializableExtra("DiaryBean");
+        int id = getIntent().getIntExtra("id",-1);
+        bean = DBHelper.getInstance().diaryDao().findId(id);
         tv_title.setText(bean.title);
         tv_content.setText(bean.content);
-
+        if (TextUtils.isEmpty(bean.huabanPathLoc)){
+            bean.iamgeList.add(bean.huabanPathLoc);
+        }
         adapter.setTList(bean.iamgeList);
         recycler.setHasFixedSize(true);
         recycler.setNestedScrollingEnabled(false);

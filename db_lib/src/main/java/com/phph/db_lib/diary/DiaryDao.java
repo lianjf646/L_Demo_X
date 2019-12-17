@@ -67,4 +67,13 @@ public interface DiaryDao extends BaseDao<DiaryBean> {
     @Query("SELECT * FROM diaryBean WHERE title LIKE '%' ||:search || '%'")
     List<DiaryBean> findTitle(String search);
 
+
+    /**
+     * 指定查询
+     *
+     * @return
+     */
+    @Query("SELECT * FROM diaryBean WHERE userId LIKE   :id")
+    DiaryBean findId(int id);
+
 }

@@ -49,6 +49,37 @@
             android:layout_height="match_parent"
             android:orientation="vertical" />
 
+        <ImageView
+            android:id="@+id/iv_not_data"
+            style="@style/image_no_data"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.gigamole.library.ShadowLayout
+            android:id="@+id/sl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="@dimen/dp50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:sl_shadow_angle="45"
+            app:sl_shadow_color="#B3B0B0"
+            app:sl_shadow_distance="3dp"
+            app:sl_shadow_radius="2dp"
+            app:sl_shadowed="true">
+
+            <ImageButton
+                android:id="@+id/ibtn_go_write"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/main_bi" />
+
+        </com.gigamole.library.ShadowLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

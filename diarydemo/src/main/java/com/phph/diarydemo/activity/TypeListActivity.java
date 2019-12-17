@@ -1,9 +1,12 @@
 package com.phph.diarydemo.activity;
 
 import android.content.Intent;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +18,9 @@ import com.phph.diarydemo.R;
 import com.phph.diarydemo.adapter.MainAdapter;
 import com.phph.x_support_lib.base.BaseActivity;
 import com.phph.x_support_lib.base.BaseRecyclerAdapter;
+import com.phph.x_support_lib.util.ListUtils;
+
+import java.util.List;
 
 public class TypeListActivity extends BaseActivity {
 
@@ -23,6 +29,12 @@ public class TypeListActivity extends BaseActivity {
 
     private RecyclerView recycler;
     private MainAdapter mainAdapter;
+
+    private ImageButton ibtn_go_write;
+
+    private ImageView iv_not_data;
+    private ImageView iv_back;
+
 
     @Override
     protected int getLayoutId() {
@@ -40,19 +52,44 @@ public class TypeListActivity extends BaseActivity {
             @Override
             public void onClick(int pos) {
                 DiaryBean bean = mainAdapter.getItemData(pos);
-                startActivity(new Intent(context, LooKDiaryDetailActivity.class).putExtra("DiaryBean", bean));
+                startActivity(new Intent(context, LooKDiaryDetailActivity.class).putExtra("id", bean.userId));
             }
         });
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setAdapter(mainAdapter);
+        ibtn_go_write = findViewById(R.id.ibtn_go_write);
+        ibtn_go_write.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, WriteDiaryActivity.class));
+            }
+        });
+        iv_not_data = findViewById(R.id.iv_not_data);
+        iv_back = findViewById(R.id.iv_back);
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
     protected void initData() {
         typeName = getIntent().getStringExtra("typeName");
         tv_title.setText(typeName);
+    }
 
-        mainAdapter.setTList(DBHelper.getInstance().diaryDao().getTypeNameList(typeName));
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<DiaryBean> diaryBeanList = DBHelper.getInstance().diaryDao().getTypeNameList(typeName);
+        mainAdapter.setTList(diaryBeanList);
+        if (ListUtils.isEmpty(diaryBeanList)) {
+            iv_not_data.setVisibility(View.VISIBLE);
+        } else {
+            iv_not_data.setVisibility(View.GONE);
+        }
 
     }
 

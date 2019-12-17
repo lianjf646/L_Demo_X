@@ -1,12 +1,20 @@
 package com.phph.diarydemo.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.phph.db_lib.DBHelper;
 import com.phph.db_lib.diary.DiaryBean;
 import com.phph.diarydemo.R;
 import com.phph.diarydemo.adapter.LooKDiaryDetailAdapter;
@@ -20,18 +28,20 @@ import com.phph.x_support_lib.helper.DateHelper;
 public class LooKDiaryDetailActivity extends BaseActivity {
 
     private TextView tv_title;
-    private String typeName;
     private RecyclerView recycler;
     private LooKDiaryDetailAdapter adapter;
-    private DiaryBean bean;
+    private int id;
     private TextView tv_go_share;
     private TextView tv_year_mooth_week;
     private TextView tv_time;
     private TextView tv_content;
     private TextView tv_day;
-
+    private ImageView iv_copy;
+    private ImageButton ibtn_updata;
+    DiaryBean bean;
 
     @Override
+
     protected int getLayoutId() {
         return R.layout.activity_lookdiarydetail;
     }
@@ -54,7 +64,7 @@ public class LooKDiaryDetailActivity extends BaseActivity {
         tv_go_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, DiaryShareActivity.class).putExtra("DiaryBean", bean));
+                startActivity(new Intent(context, DiaryShareActivity.class).putExtra("id", bean.userId));
             }
         });
 
@@ -69,12 +79,44 @@ public class LooKDiaryDetailActivity extends BaseActivity {
                 finish();
             }
         });
+        iv_copy = findViewById(R.id.iv_copy);
+        iv_copy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //获取剪贴板管理器：
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                // 创建普通字符型ClipData
+                ClipData mClipData = ClipData.newPlainText("Label", bean.content);
+                // 将ClipData内容放到系统剪贴板里。
+                cm.setPrimaryClip(mClipData);
+                Toast.makeText(activity, "复制成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+        ibtn_updata = findViewById(R.id.ibtn_go_updata);
+        ibtn_updata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, WriteDiaryActivity.class).putExtra("id", bean.userId));
+            }
+        });
     }
 
     @Override
     protected void initData() {
-        bean = (DiaryBean) getIntent().getSerializableExtra("DiaryBean");
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        id = getIntent().getIntExtra("id", 0);
+        bean = DBHelper.getInstance().diaryDao().findId(id);
+        if (bean == null) return;
         tv_title.setText(bean.title);
+        if (!TextUtils.isEmpty(bean.huabanPathLoc)) {
+            bean.iamgeList.add(bean.huabanPathLoc);
+        }
         adapter.setTList(bean.iamgeList);
         tv_year_mooth_week.setText(DateHelper.getInstance().getDateStr(bean.createDate, "yyyy年MM月"));
         tv_year_mooth_week.append("/");
