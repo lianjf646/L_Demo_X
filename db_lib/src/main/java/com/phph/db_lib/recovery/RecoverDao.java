@@ -15,7 +15,11 @@ public interface RecoverDao extends BaseDao<RecoverBean> {
     /**
      * @return 获取全部列表数据
      */
-    @Query("SELECT * FROM  diaryBean")
+    @Query("SELECT * FROM  recoverBean")
     List<RecoverBean> getAll();
+
+    @Query("DELETE FROM recoverBean ")
+    void delAll();
+
 
 }
