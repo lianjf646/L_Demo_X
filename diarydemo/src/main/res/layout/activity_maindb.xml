@@ -144,6 +144,7 @@
                 android:background="#B4B4B4" />
 
             <TextView
+                android:id="@+id/tv_booking"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/jizhang"
@@ -161,7 +162,8 @@
                 android:padding="@dimen/dp10"
                 android:text="学习"
                 android:textColor="#2C2B2B"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"

@@ -50,6 +50,7 @@ public class MainDbActivity extends BaseActivity {
     private TextView tv_time;
 
     private TextView tv_recover;
+    private TextView tv_booking;
 
     @Override
     protected int getLayoutId() {
@@ -118,7 +119,13 @@ public class MainDbActivity extends BaseActivity {
                 startActivity(new Intent(context, RecoverActivity.class));
             }
         });
-
+        tv_booking = findViewById(R.id.tv_booking);
+        tv_booking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, BookingActivity.class));
+            }
+        });
     }
 
     @Override

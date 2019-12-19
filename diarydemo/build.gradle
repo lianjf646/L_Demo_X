@@ -41,7 +41,7 @@ dependencies {
      * implementation：只在内部使用了该 module，不会向外部暴露其依赖的 module 内容。
      * api: 当前 module 会暴露其依赖的其他 module 内容。
      */
-
+    implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha01'
     implementation project(path: ':network')
     implementation project(path: ':db_lib')
     implementation project(path: ':x_support_lib')
