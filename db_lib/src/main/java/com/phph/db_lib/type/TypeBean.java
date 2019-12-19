@@ -11,6 +11,7 @@ import androidx.room.PrimaryKey;
 public class TypeBean {
     @PrimaryKey(autoGenerate = true) //定义主键
     public int userId;
+
     @ColumnInfo()
     public String typeName;
 

@@ -64,7 +64,12 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name=".activity.BookingActivity"
+            android:name=".activity.BookkeepingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name=".activity.BookkeepingTypeListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 

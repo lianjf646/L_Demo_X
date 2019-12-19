@@ -91,7 +91,7 @@ public class TypeActivity extends BaseActivity {
                 String string = text.getText().toString().trim();
                 TypeBean typeBean = new TypeBean();
                 typeBean.typeName = string;
-                DBHelper.getInstance().typeDao().insertItem(typeBean);
+                DBHelper.getInstance().typeDao().insertItems(typeBean);
                 typeListBeanList.add(new TypeListBean(string, 0));
 
             }

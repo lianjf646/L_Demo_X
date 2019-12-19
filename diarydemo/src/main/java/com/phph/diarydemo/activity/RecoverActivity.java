@@ -92,11 +92,11 @@ public class RecoverActivity extends BaseActivity {
                             diaryBean.iamgeList = bean.iamgeList;
                             diaryBean.createDate = bean.createDate;
                             diaryBean.year_mouth_day = bean.year_mouth_day;
-                            DBHelper.getInstance().diaryDao().insertItem(diaryBean);
+                            DBHelper.getInstance().diaryDao().insertItems(diaryBean);
 
                         }
                         recoverBeanList.remove(bean);
-                        DBHelper.getInstance().recoverDao().deleteItem(bean);
+                        DBHelper.getInstance().recoverDao().deleteItems(bean);
                         recoverAdapter.setTList(recoverBeanList);
                         if (ListUtils.isEmpty(recoverBeanList)) {
                             iv_not_data.setVisibility(View.VISIBLE);

@@ -231,7 +231,7 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
                 diaryBean.huabanPathLoc = huaBanpathLoc;
                 diaryBean.weather = weather;
                 diaryBean.typeName = typeName;
-                DBHelper.getInstance().diaryDao().insertItem(diaryBean);
+                DBHelper.getInstance().diaryDao().insertItems(diaryBean);
                 finish();
             }
             break;
@@ -285,7 +285,7 @@ public class WriteDiaryActivity extends BaseActivity implements View.OnClickList
                 String string = text.getText().toString().trim();
                 TypeBean typeBean = new TypeBean();
                 typeBean.typeName = string;
-                DBHelper.getInstance().typeDao().insertItem(typeBean);
+                DBHelper.getInstance().typeDao().insertItems(typeBean);
             }
         }).setNegativeButton("取消", null).show();
         return;

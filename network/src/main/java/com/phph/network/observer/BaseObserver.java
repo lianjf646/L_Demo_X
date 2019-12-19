@@ -19,7 +19,6 @@ public abstract class BaseObserver<T> implements Observer<T> {
 
     @Override
     public void onError(Throwable e) {
-
         fail(e);
     }
 

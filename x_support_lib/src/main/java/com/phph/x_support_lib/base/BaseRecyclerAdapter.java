@@ -51,7 +51,6 @@ public abstract class BaseRecyclerAdapter<T extends Object, RV extends BaseRecyc
         holder.showView(t, position);
     }
 
-
     public T getItemData(int position) {
         return tList.get(position);
     }

@@ -123,7 +123,7 @@ public class MainDbActivity extends BaseActivity {
         tv_booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, BookingActivity.class));
+                startActivity(new Intent(context, BookkeepingActivity.class));
             }
         });
     }
@@ -153,7 +153,7 @@ public class MainDbActivity extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 DiaryBean bean = mainAdapter.getItemData(pos);
-                                DBHelper.getInstance().diaryDao().deleteItem(bean);
+                                DBHelper.getInstance().diaryDao().deleteItems(bean);
                                 RecoverBean recoverBean = new RecoverBean();
                                 recoverBean.title = bean.title;
                                 recoverBean.content = bean.content;
@@ -163,7 +163,7 @@ public class MainDbActivity extends BaseActivity {
                                 recoverBean.iamgeList = bean.iamgeList;
                                 recoverBean.createDate = bean.createDate;
                                 recoverBean.year_mouth_day = bean.year_mouth_day;
-                                DBHelper.getInstance().recoverDao().insertItem(recoverBean);
+                                DBHelper.getInstance().recoverDao().insertItems(recoverBean);
                                 diaryBeans.remove(bean);
                                 mainAdapter.notifyItemRemoved(pos);
                                 mainAdapter.notifyItemRangeRemoved(pos, mainAdapter.getItemCount());

@@ -7,21 +7,25 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.phph.db_lib.bookkeeping.type.BookkeepingTypeBean;
+import com.phph.db_lib.bookkeeping.type.BookkeepingTypeDao;
+import com.phph.db_lib.converter.DateConverter;
+import com.phph.db_lib.converter.TagsConverter;
 import com.phph.db_lib.diary.DiaryBean;
+import com.phph.db_lib.diary.DiaryDao;
+import com.phph.db_lib.model.BookkeepingBean;
 import com.phph.db_lib.recovery.RecoverBean;
 import com.phph.db_lib.recovery.RecoverDao;
 import com.phph.db_lib.type.TypeBean;
-import com.phph.db_lib.user.UserBean;
-import com.phph.db_lib.converter.DateConverter;
-import com.phph.db_lib.converter.TagsConverter;
-import com.phph.db_lib.diary.DiaryDao;
 import com.phph.db_lib.type.TypeDao;
+import com.phph.db_lib.user.UserBean;
 import com.phph.db_lib.user.UserDao;
 
 /**
  * Created by v on 2019/12/9.
  */
-@Database(entities = {UserBean.class, DiaryBean.class, TypeBean.class, RecoverBean.class}, version = 1, exportSchema = false)
+@Database(entities = {UserBean.class, DiaryBean.class, TypeBean.class, RecoverBean.class, BookkeepingBean.class, BookkeepingTypeBean.class}, version = 1,
+        exportSchema = false)
 @TypeConverters({DateConverter.class, TagsConverter.class})
 public abstract class DBHelper extends RoomDatabase {
 
@@ -56,4 +60,8 @@ public abstract class DBHelper extends RoomDatabase {
     public abstract TypeDao typeDao();
 
     public abstract RecoverDao recoverDao();
+
+    public abstract BookkeepingTypeDao bookkeepingTypeDao();
+
+
 }

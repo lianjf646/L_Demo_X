@@ -33,7 +33,6 @@ public class DiaryBean implements Serializable {
 
     public List<String> iamgeList;
     public Date createDate;
-
     public String year_mouth_day;
 
 
